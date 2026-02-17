@@ -36,7 +36,14 @@ service cloud.firestore {
       // Listar, actualizar o eliminar SOLO si eres admin
       allow list, update, delete: if isAdmin();
     }
-
+    // =========================
+    // Usuario Anonimo (Demo)
+    // =========================
+      match /productos/{id} {
+        allow read: if request.auth != null;
+        allow write: if false;
+    }
+    
     // =========================
     // Productos (inventario)
     // =========================

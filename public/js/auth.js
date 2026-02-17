@@ -1,5 +1,5 @@
 import {auth} from "./app.js";
-import {signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {signInWithEmailAndPassword, signInAnonymously, getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
     db
@@ -54,6 +54,22 @@ if (loginForm) {
         }
     });
 }
+
+// --- Login Anonima ---
+const auth = getAuth();
+
+export function autoLoginDemo(){
+    onAuthStateChanged(auth, async(user) => {
+        if (!user) {
+            await signInAnonymously(auth);
+            window.location.href = "dashboard.html";
+        } else {
+            window.location.href = "dashboard.html";
+        }
+    });
+}
+
+
 
 
 // --- REGISTRO ---
