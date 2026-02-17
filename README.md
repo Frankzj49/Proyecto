@@ -3,7 +3,7 @@
 Aplicación web para gestionar productos, inventario y ventas, con autenticación y control de acceso por roles usando Firebase.
 
 ## 🔗 Demo
-- Demo (Dashboard directo / modo demo): **https://elesfuerzo-b742d.web.app/**
+- Demo (Dashboard directo / modo demo): **https://elesfuerzo-b742d.web.app/dashboard**
 - Repositorio: **https://github.com/Frankzj49/Proyecto.git**
 
 ##  Funcionalidades
