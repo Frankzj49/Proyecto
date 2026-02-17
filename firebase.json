@@ -1,0 +1,39 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "southamerica-west1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "headers": [{
+        "source": "**/*.html",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }]
+      },
+      {
+        "source": "**/*.{js,css}",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }]
+      },
+      {
+        "source": "**/*.{png,jpg,jpeg,gif,svg,webp,ico}",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }]
+      }
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================
+    // Funciones comunes
+    // =========================
+    function isAdmin() {
+      return request.auth != null &&
+             exists(/databases/$(database)/documents/usuarios/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == "admin";
+    }
+
+    function isCajero() {
+      return request.auth != null &&
+             exists(/databases/$(database)/documents/usuarios/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == "cajero";
+    }
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // =========================
+    // Usuarios (roles, login)
+    // =========================
+    match /usuarios/{userId} {
+
+      // Cualquier usuario autenticado puede CREAR su propio documento
+      // (ej: al registrarse por primera vez)
+      allow create: if isOwner(userId);
+
+      // Leer su propio documento, o cualquier usuario si eres admin
+      allow read: if isOwner(userId) || isAdmin();
+
+      // Listar, actualizar o eliminar SOLO si eres admin
+      allow list, update, delete: if isAdmin();
+    }
+
+    // =========================
+    // Productos (inventario)
+    // =========================
+    match /productos/{docId} {
+      // Todos los usuarios autenticados pueden leer
+      allow read: if request.auth != null;
+
+      // Solo admin o cajero pueden modificar el stock
+      allow update: if request.auth != null && (
+        isAdmin() ||
+        (isCajero() && request.resource.data.cantidad != null)
+      );
+
+      // Solo el admin puede crear o eliminar productos
+      allow create, delete: if isAdmin();
+    }
+
+    // =========================
+    // Ventas (registro diario)
+    // =========================
+    match /ventas/{docId} {
+      // Solo usuarios autenticados pueden leer y crear ventas
+      allow read, create: if request.auth != null;
+      // Solo admin puede editar o borrar ventas
+      allow delete, update: if isAdmin();
+    }
+
+    // =========================
+    // Cierres de caja
+    // =========================
+    match /cierresCaja/{docId} {
+      // Cajeros pueden crear cierres; admin también
+      allow create: if isCajero() || isAdmin();
+      // Solo admin puede leer, borrar o actualizar
+      allow read, delete, update: if isAdmin();
+    }
+
+    // =========================
+    // Proveedores
+    // =========================
+    match /proveedores/{docId} {
+      allow read: if request.auth != null;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

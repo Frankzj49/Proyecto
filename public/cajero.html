@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cajero — El Esfuerzo</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar__left">
+            <span class="brand">El Esfuerzo</span>
+
+            <!-- Sólo visible para admin -->
+            <a href="./dashboard.html" class="topbar__link solo-admin">Dashboard</a>
+
+            <a href="./cajero.html" class="topbar__link topbar__link--active">Cajero</a>
+        </div>
+        <div class="topbar__right">
+            <button id="btnNotif" class="chip">
+                🔔 <span id="badgeNotifs" class="badge" style="display:none">0</span>
+            </button>
+            <button id="logoutBtn" class="chip chip--danger">⎋ Cerrar sesión</button>
+        </div>
+    </header>
+
+    <!-- PANEL NOTIFICACIONES -->
+    <aside id="notifPanel" class="notif-panel">
+        <div class="notif-header">
+            <strong>Alertas de inventario</strong>
+            <button id="closeNotif" class="pos-chip">Cerrar</button>
+        </div>
+        <ul id="notifList" class="clean"></ul>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="container">
+
+        <div class="grid">
+            <!-- Catálogo -->
+            <section class="card">
+                <h2 class="h1">Catálogo</h2>
+
+                <input id="buscarInput" class="input" placeholder="Buscar productos…">
+
+                <ul id="lista-catalogo" class="clean" style="margin-top:14px"></ul>
+            </section>
+
+            <!-- Caja -->
+            <section class="card">
+                <h2 class="h1">Caja</h2>
+
+                <div class="tabla-caja">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Cant.</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbCarro"></tbody>
+                    </table>
+                </div>
+
+                <!-- PANEL TOTAL  -->
+                <div class="panel-totales">
+                    <div><strong>Subtotal:</strong> <span id="subTotal">$0</span></div>
+                    <div><strong>IVA (19%):</strong> <span id="iva">$0</span></div>
+                    <div><strong>Total:</strong> <span id="total">$0</span></div>
+
+                    <div class="divider"></div>
+
+                    <div><strong>Método de pago:</strong></div>
+                    <select id="metodoPago" class="input" style="margin-bottom:10px;">
+                        <option value="efectivo">Efectivo</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </select>
+
+                    <div class="muted">Pago recibido</div>
+                    <input id="pagoInput" type="number" min="0" class="input" max="200">
+                    <p id="mensajeCajero" class="mensaje-cajero"></p>
+                    <div class="vuelto">
+                        <strong>Vuelto:</strong> <span id="vuelto">$0</span>
+                    </div>
+                </div>
+
+                <!-- TECLADO -->
+                <div class="zona-teclado">
+                    <div class="keypad">
+                        <button class="ok" data-action="add">🛒</button>
+                        <button data-digit="1">1</button><button data-digit="2">2</button><button
+                            data-digit="3">3</button>
+                        <button class="del" data-action="del">X</button>
+
+                        <button data-digit="5">5</button><button data-digit="6">6</button><button
+                            data-digit="7">7</button>
+                        <button class="clr" data-action="clr">CL</button>
+
+                        <button data-digit="9">9</button><button data-digit="0">0</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- MODAL BOLETA -->
+    <div id="modalBoleta" class="modal-boleta" style="display:none;">
+        <div class="modal-content">
+            <h2>BOLETA Nº <span id="boletaIdPrint"></span></h2>
+            <p><strong>Minimarket El Esfuerzo</strong></p>
+            <p>RUT: 5.992.649-7</p>
+            <p id="boletaFecha"></p>
+
+            <h3>Detalle</h3>
+            <ul id="detalleBoleta"></ul>
+
+            <p><strong>Subtotal:</strong> <span id="modalSubTotal"></span></p>
+            <p><strong>IVA 19%:</strong> <span id="modalIVA"></span></p>
+            <p><strong>Total:</strong> <span id="modalTotal"></span></p>
+            <p><strong>Método:</strong> <span id="modalMetodoPago"></span></p>
+            <p><strong>Pago cliente:</strong> <span id="modalPago"></span></p>
+            <p><strong>Vuelto:</strong> <span id="modalVuelto"></span></p>
+
+            <button id="cerrarModalBoleta" class="chip" style="margin-top:14px">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- módulos -->
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/auth.js"></script>
+    <script type="module" src="./elesfuerzo/cajero.js"></script>
+
+</body>
+
+</html>
