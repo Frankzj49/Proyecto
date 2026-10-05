@@ -151,8 +151,6 @@ function actualizarTotales() {
 
     if (metodo === "tarjeta") {
         // Tarjeta: pago exacto, sin vuelto y sin usar input
-        pago = total;
-        vuelto = 0;
         if (pagoInput) {
             pagoInput.value = "";
             pagoInput.disabled = true;

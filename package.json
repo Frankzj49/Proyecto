@@ -1,0 +1,24 @@
+{
+  "name": "proyecto",
+  "version": "1.0.0",
+  "description": "Aplicación web para gestionar productos, inventario y ventas, con autenticación y control de acceso por roles usando Firebase.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint public/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frankzj49/Proyecto.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Frankzj49/Proyecto/issues"
+  },
+  "homepage": "https://github.com/Frankzj49/Proyecto#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0"
+  }
+}
